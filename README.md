@@ -1,6 +1,9 @@
 # BiKaya
 
-## About
+## About  
+
+BiKaya is an operating system developed to run on 2 different architectures (umps2 and uarm). In particular, the goal of this project was to develop two levels 
+of astraction: code managment and OS kernel.
 
 ## Installation
 
@@ -42,14 +45,15 @@ $ make clean
 $ make umpsclean
 $ make uarmcle
 
-## Phases
+## Phases  
+This project was developed following four different phases: 0, 1, 1.5 and 2.  Inside this repository there are files from all of them but the documentation 
+is strictly about the last one.
 
 ### Phase 2
 
-File relativi alla fase 2:
-(gli altri sono stati lasciati per coerenza con le fasi precedenti)
+Files congruent with phase 2, are:  
 
-Sorgenti: 
+Sources: 
    - main.c
    - scheduler.c
    - handler.c
@@ -57,7 +61,7 @@ Sorgenti:
    - interrupt.c
    - asl.c
    - pcb.c
-   - p2test_bikaya_v0.2.c
+   - p2test_bikaya_v0.2.c (this was a test file used to make sure the implementation was right)
 
 Headers:
     - scheduler.h
@@ -71,8 +75,7 @@ Headers:
     - types_bikaya.h
 
 
-
-Lo progettazione relativa a questa fase del progetto è stata strutturata nella seguente modalità:
+The design of this phase was structured following these rules:  
 
 - main.c: file sorgente in cui avvengono tutte le inizializzazioni: vengono inizializzate le new areas,
           i pcbs (processo test e processo idle) e le variabili del kernel. 
@@ -92,8 +95,33 @@ Lo progettazione relativa a questa fase del progetto è stata strutturata nella 
                      funzione LDST, IEc risulti attivo). Tutti gli interrupt vengono abilitati impostando tutti i bit 
                      dell'IM a 1.
            
-                 
 
+- scheduler.c: lo scheduler seleziona un processo dalla readyQueue, se questa non è vuota, utilizzando la funzione
+               removeProcQ; essa rimuove il primo pcb della lista che è anche quello a priorità più alta. Dopo aver fatto
+               l'aging degli altri processi, il processo selezionato viene reinserito in coda con la sua priorità originaria.
+               A questo punto, la funzione di scheduling setta il timer a 3 millisecondi (il valore viene settato a 3000 poiche'
+               tale valore viene decrementato ogni 10^(-3) millisecondi) e carica lo stato del processo selezionato nel processore,
+               utilizzando la funzione LDST.
+               Quando non sono più presenti processi nella readyQueue(), viene invocata la funzione HALT() per terminare.
+
+- handler.c: questo sorgente contiene le funzioni per la gestione delle eccezioni di tipo trap e tlb, più alcune funzioni di 'supporto'.
+          
+             Sia nel caso degli interrupt sia nel caso di una syscall, le funzioni deputate alla gestione di tali eccezioni verificano
+             che effettivamente siano stati generati un interrupt o una syscall, rispettivamente, altrimenti il sistema viene messo in 
+             stato PANIC. Dopo questo primo controllo, lo stato presente nella old area (relativa all'eccezione) viene copiato nello stato 
+             del processo corrente (selected); prima di fare ciò il program counter dello stato salvato viene decrementato di una word, 
+             nel caso di interrupt (su uarm) e incrementato di una word in caso di syscall (su umps), come da specifiche.
+             
+- interrupt.c: la funzione 'interrupt_H' controlla su quali linee è stato sollevato, guardandole tutta partendo da quella più bassa e a priorità 
+               più alta. Se su una linea si trovano degli interrupt pendenti, controlla tutti i dispositivi in attesa sulla linea. 
+               Se l'interrupt è stato scatenato dallo scadere del timer, il timer viene ricaricato.
+               Negli altri casi viene settato il comando di acknoledgement sul registro del disposito e viene sbloccato il processo che aveva 
+               richiesto l'operazione.
+             
+- syscall.c: la funzione 'syscall_H' controlla se è stata sollevata una syscall o un breakpoint, controlla il valore contenuto nel registro a0/a1 e 
+             si occupa di gestire la syscall richiesta.  
+             
+             
 ## Authors  
 
 This project has been developed has part of 'Operating Systems' course at University of Bologna. 
