@@ -2,48 +2,49 @@
 
 ## About  
 
-BiKaya is an operating system developed to run on 2 different architectures (umps2 and uarm). In particular, the goal of this project was to develop two levels 
-of astraction: code managment and OS kernel.
+BiKaya is an operating system developed to run on 2 different architectures, MIPS and ARM. BiKaya is based upon a 6 levels of astraction architecure but, in particular, the goal of this project was to develop only two of those: code managment and OS kernel.  
 
-## Installation
+## Requirements
 
-Per la compilazione del progetto occorre aver installato gli emulatori umps2 e uarm, 
-per i quali si può fare riferimento ai seguenti link:
+In order to compile the project the first thing to do is install the emulators: µMPS2 and µARM.  
+This is possible through the following links:  
 https://github.com/mellotanica/uARM
 https://github.com/tjonjic/umps
 
-Una volta installati tutti i pacchetti richiesti dalle macchine, 
-occore decomprire la cartella 'SO_phase2.tar.gz' fornita e accedervi da terminale.
-
-In particolare sono necessari i seguenti pacchetti:
+Packages required are:  
 - arm-none-eabi-gcc
 - mipsel-linux-gnu-gcc
 - uarm 
 - umps 
-- make
+- make  
 
-E' possibile invocare make su uno specifo make file, utilizzando i comandi:
+## Installation  
 
-$ make -f uarmmake
-$ make -f umpsmake
+Once the requirements are met and the repository has been downloaded the steps to follow are:  
 
-in alternativa, è possibile invocare 'make' specificando un target
+Invoking make on one specific make file, using:  
 
-$ make umps
-$ make uarm
+`$ make -f uarmmake
+$ make -f umpsmake`
 
-in entrambi i casi verrà eseguita la compilazione per l'emulatore richiesto.
+or, it is also possible, one can invoke `make` specifying a target:  
 
-I file necessari per l'esecuzione saranno disponibili in due sottodirectory: umps_obj e uarm_obj.
+`$ make umps
+$ make uarm`
 
-A questo punto è possibile aprire uno dei due emulatori lanciando il comando 'umps2' o 'uarm',
-creare una configurazione per la macchina caricando i file richiesti e far partire l'esecuzione.
+In both cases only the requested emulator's compilation will be done.  
 
-Per eliminare i file creati utilizzare i comandi:
+Depending on which emulator was chosen there will be a new folder (umps_obj or uarm_obj) containing the files for the execution.  
 
-$ make clean
+## Running  
+
+Finally, through the Terminal, an emulator can be open using `umps2` or `uarm`, then a new configuration (with the requested files) is needed to start.  
+
+To remove the files just created:
+
+`$ make clean
 $ make umpsclean
-$ make uarmcle
+$ make uarmcle`
 
 ## Phases  
 This project was developed following four different phases: 0, 1, 1.5 and 2.  Inside this repository there are files from all of them but the documentation 
