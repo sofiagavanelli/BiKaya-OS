@@ -66,7 +66,6 @@ Headers:
     - interrupt.h
     - asl.h
     - pcb.h
-
     - listx.h
     - const.h
     - types_bikaya.h
@@ -84,7 +83,6 @@ Lo progettazione relativa a questa fase del progetto è stata strutturata nella 
           lo stack pointer a RAMTOP ed il program counter all'indirizzo della funzione (handler) dedicata 
           a gestire l'eccezione associata alla new area. Infine viene settato lo status.
           
-         
           Inizializzazione dei pcbs: viene prelevato un processo dalla coda dei processi liberi, 
           utilizzando la funzione 'allocPcb()' sviluppata in fase 1. Lo stack pointer relativo viene 
           impostato a (ramtop - framesize*n), vengono impostati i campi priority ed original priority 
