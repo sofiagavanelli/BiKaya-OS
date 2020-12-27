@@ -6,9 +6,8 @@ BiKaya is an operating system developed to run on 2 different architectures, MIP
 
 ## Requirements
 
-In order to compile the project the first thing to do is install the emulators: µMPS2 and µARM.  
-This is possible through the following links:  
-https://github.com/mellotanica/uARM
+In order to compile the project the first thing to do is install the emulators: µMPS2 and µARM.  This is possible through the following links:  
+https://github.com/mellotanica/uARM  
 https://github.com/tjonjic/umps
 
 Packages required are:  
@@ -24,12 +23,12 @@ Once the requirements are met and the repository has been downloaded the steps t
 
 Invoking make on one specific make file, using:  
 
-`$ make -f uarmmake
+`$ make -f uarmmake  
 $ make -f umpsmake`
 
 or, it is also possible, one can invoke `make` specifying a target:  
 
-`$ make umps
+`$ make umps  
 $ make uarm`
 
 In both cases only the requested emulator's compilation will be done.  
@@ -42,9 +41,9 @@ Finally, through the Terminal, an emulator can be open using `umps2` or `uarm`, 
 
 To remove the files just created:
 
-`$ make clean
-$ make umpsclean
-$ make uarmcle`
+`$ make clean  
+$ make umpsclean  
+$ make uarmcle`  
 
 ## Phases  
 This project was developed following four different phases: 0, 1, 1.5 and 2.  Inside this repository there are files from all of them but the documentation 
