@@ -1,0 +1,74 @@
+# Cross toolchain variables
+# If these are not in your path, you can make them absolute.
+XT_PRG_PREFIX = mipsel-linux-gnu-
+#XT_PRG_PREFIX = ~/x-tools/mipsel-unknown-linux-gnu/bin/mipsel-unknown-linux-gnu-
+CC = $(XT_PRG_PREFIX)gcc
+LD = $(XT_PRG_PREFIX)ld
+
+#search for umps's location
+ifeq ("$(wildcard usr/local/share/umps2)","")
+    UMPS_PREFIX = /usr/share
+else
+    UMPS_PREFIX = /usr/local/share
+endif
+
+# uMPS2-related paths
+UMPS2_DIR = umps
+INCLUDE_DIR = include
+
+# Compiler options
+CFLAGS_LANG = -ffreestanding -DTARGET_UMPS=1
+CFLAGS_MIPS = -mips1 -mabi=32 -mno-gpopt -G 0 -mno-abicalls -fno-pic -mfp32
+CFLAGS = $(CFLAGS_LANG) $(CFLAGS_MIPS) -I$(UMPS2_DIR) -I$(INCLUDE_DIR) -Wall -O0
+
+# Linker options
+LDFLAGS = -G 0 -nostdlib -T $(UMPS2_DIR)/umpscore.ldscript
+
+# Add the location of crt*.S to the search path
+VPATH = $(UMPS2_DIR)
+
+.PHONY : all clean
+
+# target directory
+UMPS = umps_obj
+
+# source modules
+src = main.c scheduler.c p2test_bikaya_v0.2.c handler.c syscall.c interrupt.c asl.c pcb.c
+objects = $(patsubst %.c, $(UMPS)/%.o, $(src))
+
+# assembly modules
+asm = crtso.S libumps.S
+assembly = $(patsubst %.S, $(UMPS)/%.o, $(asm))
+
+core = $(UMPS)/kernel.core.umps
+
+disk = $(UMPS)/disk0.umps
+
+all: create $(core) 
+
+#$(disk):
+#	umps2-mkdev -d $@ 
+	
+create:
+ifeq ("$(wildcard $(UMPS))","")
+	-mkdir $(UMPS)
+endif
+
+$(objects): $(UMPS)/%.o : %.c 
+	$(CC) $(CFLAGS) -c -o $@ $< 
+
+$(assembly): $(UMPS)/%.o : %.S
+	$(CC) $(CFLAGS) -c -o $@ $< 
+
+$(core) : $(UMPS)/kernel 
+	umps2-elf2umps -k $<
+
+$(UMPS)/kernel : $(objects) $(assembly)
+	$(LD) $(LDFLAGS) $^ -o $@ 
+
+clean:
+ifneq ("$(wildcard $(UMPS))","")
+	-rm $(UMPS)/*
+	-rmdir $(UMPS)
+endif 
+
