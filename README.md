@@ -97,9 +97,10 @@ Lo progettazione relativa a questa fase del progetto è stata strutturata nella 
 ## Authors  
 
 This project has been developed has part of 'Operating Systems' course at University of Bologna. 
+This code has been developed by *Gavanelli Sofia*, *Lena Erika* and *Leoncini Matteo*, contact informations:  
 
-Sofia Gavanelli     sofia.gavanelli@studio.unibo.it  
-Erika Lena	        erika.lena@studio.unibo.it  
-Matteo Leoncini     matteo.leoncini@studio.unibo.it
+https://github.com/sofiagavanelli  
+https://github.com/erikalena  
+matteo.leoncini@studio.unibo.it
 
 Feel free to contact anyone of us for informations or doubts.
