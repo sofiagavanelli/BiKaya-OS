@@ -2,7 +2,7 @@
 
 ## About  
 
-BiKaya is an operating system developed to run on 2 different architectures, MIPS and ARM. BiKaya is based upon a 6 levels of astraction architecure but, in particular, the goal of this project was to develop only two of those: code managment and OS kernel.  
+BiKaya is an operating system developed to run on 2 different architectures, MIPS and ARM. BiKaya is based upon a 6 levels of astraction architecure but, in particular, the goal of this project was to develop only two of those: queue's managment and OS kernel.  
 
 ## Requirements
 
@@ -28,7 +28,7 @@ $ make -f uarmmake
 $ make -f umpsmake  
 ```
 
-or, it is also possible, one can invoke `make` specifying a target:  
+or, it is also possible, invoking `make` specifying a target:  
 
 ```
 $ make umps  
@@ -113,8 +113,7 @@ lo scheduler seleziona un processo dalla readyQueue, se questa non è vuota, uti
 ##### handler.c:  
 
 questo sorgente contiene le funzioni per la gestione delle eccezioni di tipo trap e tlb, più alcune funzioni di 'supporto'.
-          
-             Sia nel caso degli interrupt sia nel caso di una syscall, le funzioni deputate alla gestione di tali eccezioni verificano
+          Sia nel caso degli interrupt sia nel caso di una syscall, le funzioni deputate alla gestione di tali eccezioni verificano
              che effettivamente siano stati generati un interrupt o una syscall, rispettivamente, altrimenti il sistema viene messo in 
              stato PANIC. Dopo questo primo controllo, lo stato presente nella old area (relativa all'eccezione) viene copiato nello stato 
              del processo corrente (selected); prima di fare ciò il program counter dello stato salvato viene decrementato di una word, 
@@ -122,7 +121,9 @@ questo sorgente contiene le funzioni per la gestione delle eccezioni di tipo tra
              
 ##### interrupt.c:  
 
-la funzione 'interrupt_H' controlla su quali linee è stato sollevato, guardandole tutta partendo da quella più bassa e a priorità 
+Function `interrupt_H` : its main job is to understand which lines have raised the interrupt starting from the lowest with the higher priority. If hanging interrupts are find on a line then the function controls all the waiting devices on that line. If the interrupt has been raised because the time was up then the timer is reset. In all the other cases, the acknowledgment command is set on the device register and the process requesting the operation is released.
+
+/////la funzione 'interrupt_H' controlla su quali linee è stato sollevato, guardandole tutta partendo da quella più bassa e a priorità 
                più alta. Se su una linea si trovano degli interrupt pendenti, controlla tutti i dispositivi in attesa sulla linea. 
                Se l'interrupt è stato scatenato dallo scadere del timer, il timer viene ricaricato.
                Negli altri casi viene settato il comando di acknoledgement sul registro del disposito e viene sbloccato il processo che aveva 
@@ -130,14 +131,15 @@ la funzione 'interrupt_H' controlla su quali linee è stato sollevato, guardando
              
 ##### syscall.c:  
 
-la funzione 'syscall_H' controlla se è stata sollevata una syscall o un breakpoint, controlla il valore contenuto nel registro a0/a1 e 
-             si occupa di gestire la syscall richiesta.  
+Function `syscall_H` : its task is to check if any syscall or breakpoints have been thrown. Then, it controls the obtained value in the register a0/a1 to deal with the requested exception. 
+
+///la funzione 'syscall_H' controlla se è stata sollevata una syscall o un breakpoint, controlla il valore contenuto nel registro a0/a1 e si occupa di gestire la syscall richiesta.  
              
              
 ## Authors  
 
 This project has been developed has part of 'Operating Systems' course at University of Bologna. 
-This code has been developed by *Gavanelli Sofia*, *Lena Erika* and *Leoncini Matteo*, contact informations:  
+This code has been written by *Gavanelli Sofia*, *Lena Erika* and *Leoncini Matteo*, contact informations:  
 
 https://github.com/sofiagavanelli  
 https://github.com/erikalena  
