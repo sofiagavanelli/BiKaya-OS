@@ -67,16 +67,16 @@ Sources:
    - pcb.c
    - p2test_bikaya_v0.2.c (this was a test file used to make sure the implementation was right)
 
-Headers:
-    - scheduler.h
-    - handler.h
-    - syscall.h
-    - interrupt.h
-    - asl.h
-    - pcb.h
-    - listx.h
-    - const.h
-    - types_bikaya.h
+Headers:  
+   - scheduler.h  
+   - handler.h  
+   - syscall.h  
+   - interrupt.h 
+   - asl.h
+   - pcb.h
+   - listx.h
+   - const.h
+   - types_bikaya.h  
 
 ### Design  
 
