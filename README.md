@@ -2,13 +2,13 @@
 
 ## About  
 
-BiKaya is an operating system developed to run on 2 different architectures, MIPS and ARM. BiKaya is based upon a 6 levels of astraction architecure but, in particular, the goal of this project was to develop only two of those: queue's managment and OS kernel.  
+BiKaya is an educational operating system based upon a 6 levels of astraction architecure; it was developed to run on 2 different architectures, MIPS and ARM. In particular, the goal of this project was to develop only two of those levels: queue's managment and OS kernel.  
 
 ## Requirements
 
 In order to compile the project the first thing to do is install the emulators: µMPS2 and µARM.     
 
-This is possible through the following links: https://github.com/mellotanica/uARM for uarm and https://github.com/tjonjic/umps for umps.  
+This is possible using the following links: https://github.com/mellotanica/uARM for uarm and https://github.com/tjonjic/umps for umps.  
 
 Packages required are:  
 - arm-none-eabi-gcc
@@ -52,8 +52,12 @@ $ make uarmcle
 ```
 
 ## Phases  
+
 This project was developed following four different phases: 0, 1, 1.5 and 2.  Inside this repository there are files from all of them but the documentation 
 is strictly about the last one.
+
+This was the structure of the phases:
+/////inserire imm slide
 
 Files congruent with phase 2, are:  
 
@@ -80,7 +84,7 @@ Headers:
 
 ### Design  
 
-The design of this phase was structured following these rules:  
+The structure of this phase was based upon these files:  
 
 #### main.c: 
 file sorgente in cui avvengono tutte le inizializzazioni: vengono inizializzate le new areas,
