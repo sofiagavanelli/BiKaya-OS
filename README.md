@@ -55,8 +55,6 @@ $ make uarmcle
 This project was developed following four different phases: 0, 1, 1.5 and 2.  Inside this repository there are files from all of them but the documentation 
 is strictly about the last one.
 
-### Phase 2
-
 Files congruent with phase 2, are:  
 
 Sources: 
@@ -80,11 +78,11 @@ Headers:
     - const.h
     - types_bikaya.h
 
-#### Design  
+### Design  
 
 The design of this phase was structured following these rules:  
 
-##### main.c: 
+#### main.c: 
 file sorgente in cui avvengono tutte le inizializzazioni: vengono inizializzate le new areas,
           i pcbs (processo test e processo idle) e le variabili del kernel. 
           I processi vengono inseriti nella readyQueue e viene chiamato lo scheduler per decidere che processo 
@@ -101,7 +99,7 @@ file sorgente in cui avvengono tutte le inizializzazioni: vengono inizializzate 
                      dell'IM a 1.
            
 
-##### scheduler.c:  
+#### scheduler.c:  
 lo scheduler seleziona un processo dalla readyQueue, se questa non è vuota, utilizzando la funzione
                removeProcQ; essa rimuove il primo pcb della lista che è anche quello a priorità più alta. Dopo aver fatto
                l'aging degli altri processi, il processo selezionato viene reinserito in coda con la sua priorità originaria.
@@ -110,7 +108,7 @@ lo scheduler seleziona un processo dalla readyQueue, se questa non è vuota, uti
                utilizzando la funzione LDST.
                Quando non sono più presenti processi nella readyQueue(), viene invocata la funzione HALT() per terminare.
 
-##### handler.c:  
+#### handler.c:  
 
 questo sorgente contiene le funzioni per la gestione delle eccezioni di tipo trap e tlb, più alcune funzioni di 'supporto'.
           Sia nel caso degli interrupt sia nel caso di una syscall, le funzioni deputate alla gestione di tali eccezioni verificano
@@ -119,7 +117,7 @@ questo sorgente contiene le funzioni per la gestione delle eccezioni di tipo tra
              del processo corrente (selected); prima di fare ciò il program counter dello stato salvato viene decrementato di una word, 
              nel caso di interrupt (su uarm) e incrementato di una word in caso di syscall (su umps), come da specifiche.
              
-##### interrupt.c:  
+#### interrupt.c:  
 
 Function `interrupt_H` : its main job is to understand which lines have raised the interrupt starting from the lowest with the higher priority. If hanging interrupts are find on a line then the function controls all the waiting devices on that line. If the interrupt has been raised because the time was up then the timer is reset. In all the other cases, the acknowledgment command is set on the device register and the process requesting the operation is released.
 
@@ -129,7 +127,7 @@ Function `interrupt_H` : its main job is to understand which lines have raised t
                Negli altri casi viene settato il comando di acknoledgement sul registro del disposito e viene sbloccato il processo che aveva 
                richiesto l'operazione.
              
-##### syscall.c:  
+#### syscall.c:  
 
 Function `syscall_H` : its task is to check if any syscall or breakpoints have been thrown. Then, it controls the obtained value in the register a0/a1 to deal with the requested exception. 
 
