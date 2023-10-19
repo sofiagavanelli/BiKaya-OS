@@ -56,9 +56,6 @@ $ make uarmcle
 This project was developed following four different phases: 0, 1, 1.5 and 2.  Inside this repository there are files from all of them but the documentation 
 is strictly about the last one.
 
-This was the structure of the phases:
-/////inserire imm slide
-
 Files congruent with phase 2, are:  
 
 Sources: 
@@ -82,9 +79,9 @@ Headers:
    - const.h
    - types_bikaya.h  
 
-### Design  
+### Design (IT only)
 
-The structure of this phase was based upon these files:  
+La struttura di questa fase è sviluppata su questi file:
 
 #### main.c: 
 file sorgente in cui avvengono tutte le inizializzazioni: vengono inizializzate le new areas,
@@ -123,9 +120,7 @@ questo sorgente contiene le funzioni per la gestione delle eccezioni di tipo tra
              
 #### interrupt.c:  
 
-Function `interrupt_H` : its main job is to understand which lines have raised the interrupt starting from the lowest with the higher priority. If hanging interrupts are find on a line then the function controls all the waiting devices on that line. If the interrupt has been raised because the time was up then the timer is reset. In all the other cases, the acknowledgment command is set on the device register and the process requesting the operation is released.
-
-/////la funzione 'interrupt_H' controlla su quali linee è stato sollevato, guardandole tutta partendo da quella più bassa e a priorità 
+la funzione 'interrupt_H' controlla su quali linee è stato sollevato, guardandole tutta partendo da quella più bassa e a priorità 
                più alta. Se su una linea si trovano degli interrupt pendenti, controlla tutti i dispositivi in attesa sulla linea. 
                Se l'interrupt è stato scatenato dallo scadere del timer, il timer viene ricaricato.
                Negli altri casi viene settato il comando di acknoledgement sul registro del disposito e viene sbloccato il processo che aveva 
@@ -133,9 +128,7 @@ Function `interrupt_H` : its main job is to understand which lines have raised t
              
 #### syscall.c:  
 
-Function `syscall_H` : its task is to check if any syscall or breakpoints have been thrown. Then, it controls the obtained value in the register a0/a1 to deal with the requested exception. 
-
-///la funzione 'syscall_H' controlla se è stata sollevata una syscall o un breakpoint, controlla il valore contenuto nel registro a0/a1 e si occupa di gestire la syscall richiesta.  
+la funzione 'syscall_H' controlla se è stata sollevata una syscall o un breakpoint, controlla il valore contenuto nel registro a0/a1 e si occupa di gestire la syscall richiesta.  
              
              
 ## Authors  
